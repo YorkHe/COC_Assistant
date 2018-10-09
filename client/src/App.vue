@@ -43,7 +43,7 @@
             <v-toolbar-title>Call of Cthulu</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn flat>我的人物卡</v-btn>
+                <PlayerCard></PlayerCard>
             </v-toolbar-items>
         </v-toolbar>
         <v-content>
@@ -199,7 +199,12 @@
 </style>
 
 <script>
+    import PlayerCard from "./components/PlayerCard.vue"
+
     export default {
+        components: {
+            PlayerCard
+        },
         data: () => ({
             bias_value:0,
             prop_name:"",
