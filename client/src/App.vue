@@ -23,8 +23,8 @@
                 </v-list-tile>
                 <v-divider>
                 </v-divider>
-                 <v-subheader>
-                     PC
+                <v-subheader>
+                    PC
                 </v-subheader>
                 <v-list-tile
                         v-for="(item, index) in PC"
@@ -76,7 +76,6 @@
                 </v-flex>
                 <v-btn>发送</v-btn>
                 <v-dialog
-                        v-model="dialog"
                         width="600"
                 >
                     <v-btn
@@ -92,36 +91,38 @@
                         <v-card-text>
                             <v-container grid-list-md>
                                 <v-layout wrap>
-                                        <span class="text-sm-center" style="margin: auto;">检定</span>
+                                    <span class="text-sm-center" style="margin: auto;">检定</span>
                                     <v-flex sm4>
-                                        <v-text-field label="属性/技能"></v-text-field>
+                                        <v-text-field disabled label="属性/技能" v-model="prop_name"></v-text-field>
                                     </v-flex>
-                                    <v-flex sm2>
-                                        <v-text-field label="点数" width="14"></v-text-field>
+                                    <v-flex sm4>
+                                        <v-text-field  disabled label="点数" width="14" v-model="_dice_result1"></v-text-field>
                                     </v-flex>
                                     <span class="text-sm-center" style="margin: auto;">+</span>
                                     <v-flex sm3>
-                                        <v-select :items="properties"></v-select>
+                                        <v-text-field label="偏移" width="14" v-model="bias_value"></v-text-field>
                                     </v-flex>
                                 </v-layout>
                                 <v-subheader>
-                                        属性
+                                    属性
                                 </v-subheader>
                                 <v-layout row wrap>
                                     <v-chip
                                             v-for="(item, index) in properties"
                                             :key="index"
+                                            v-on:click="handlePropertySelect('property', $event)"
                                     >
                                         {{item.title}}
                                     </v-chip>
                                 </v-layout>
-                                 <v-subheader>
-                                     技能
+                                <v-subheader>
+                                    技能
                                 </v-subheader>
                                 <v-layout row wrap>
                                     <v-chip
                                             v-for="(item, index) in skills"
                                             :key="index"
+                                            v-on:click="handlePropertySelect('skill', $event)"
                                     >
                                         {{item.title}}
                                     </v-chip>
@@ -133,21 +134,21 @@
                                     <v-chip
                                             v-for="(item, index) in dices"
                                             :key="index"
+                                            v-on:click="handleDiceSelect(dice_count1, $event)"
                                     >
                                         {{item}}
                                     </v-chip>
                                 </v-layout>
-
                             </v-container>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
+                            <v-btn flat v-on:click="handleClearExamine">清除</v-btn>
                             <v-btn flat>丢!</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
                 <v-dialog
-                        v-model="dialog"
                         width="500"
                 >
                     <v-btn
@@ -160,14 +161,14 @@
                             请选择要投掷的骰子
                         </v-card-title>
                         <v-card-text>
-                        <v-container grid-list-md>
+                            <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex sm5>
-                                        <v-text-field label="点数" width="14"></v-text-field>
+                                        <v-text-field disabled label="点数" width="14" v-model="dice_result2"></v-text-field>
                                     </v-flex>
                                     <span class="text-sm-center" style="margin: auto;">+</span>
                                     <v-flex sm5>
-                                        <v-select :items="properties"></v-select>
+                                        <v-text-field label="偏移" width="14"></v-text-field>
                                     </v-flex>
                                 </v-layout>
                                 <v-subheader>
@@ -177,6 +178,7 @@
                                     <v-chip
                                             v-for="(item, index) in dices"
                                             :key="index"
+                                            v-on:click="handleDiceSelect(dice_count2, $event)"
                                     >
                                         {{item}}
                                     </v-chip>
@@ -199,6 +201,14 @@
 <script>
     export default {
         data: () => ({
+            bias_value:0,
+            prop_name:"",
+            dice_count1:[],
+            dice_count2:[],
+            dice_result1:"",
+            dice_result2:"",
+            slider1: 50,
+            slider2: 50,
             KP: [
                 {name: "KP1"}
             ],
@@ -253,8 +263,43 @@
             ]
 
         }),
+        computed: {
+            _dice_result1: {
+                set: function (value) {
+                    this.dice_result1=value
+                },
+                get: function () {
+                    return this.dice_count1.map(item=> item.value + item.name).concat()
+                }
+            }
+        },
         props: {
             source: String
+        },
+        methods: {
+            handlePropertySelect(type, event) {
+                if (event) event.preventDefault()
+                this.prop_name = event.target.innerText
+            },
+            handleDiceSelect(dice_count, event) {
+                if (event) event.preventDefault()
+                for(let i = 0; i < dice_count.length; i++) {
+                    let obj = dice_count[i];
+                    if (obj.name == event.target.innerText) {
+                        obj.value ++
+                        return
+                    }
+                }
+                dice_count.push({
+                    name: event.target.innerText,
+                    value: 1,
+                })
+            },
+            handleClearExamine(event){
+                if (event) event.preventDefault()
+                this.prop_name = ""
+                this.dice_count1 = []
+            }
         }
     }
 </script>
