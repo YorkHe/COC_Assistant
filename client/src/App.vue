@@ -1,67 +1,260 @@
 <template>
-    <div class="page-container">
-        <md-app md-waterfall md-mode="fixed">
-            <md-app-toolbar class="md-primary">
-                <span class="md-title">My Title</span>
-            </md-app-toolbar>
+    <v-app id="inspire">
+        <v-navigation-drawer
+                v-model="drawer"
+                fixed
+                app
+                permanent
+        >
+            <v-list dense>
+                <v-subheader>
+                    KP
+                </v-subheader>
+                <v-list-tile
+                        v-for="(item, index) in KP"
+                        :key="index"
+                >
+                    <v-list-tile-action>
+                        <v-icon>person</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{item.name}}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-divider>
+                </v-divider>
+                 <v-subheader>
+                     PC
+                </v-subheader>
+                <v-list-tile
+                        v-for="(item, index) in PC"
+                        :key="index"
+                >
+                    <v-list-tile-action>
+                        <v-icon>child_care</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{item.name}}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+        </v-navigation-drawer>
+        <v-toolbar color="indigo" dark fixed app>
+            <v-toolbar-title>Call of Cthulu</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn flat>我的人物卡</v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
+        <v-content>
+            <v-container fluid fill-height>
+                <v-list
+                        style="background: rgba(0,0,0,0);"
+                >
+                    <v-card
+                            v-for="(item, index) in messages"
+                            :key="index"
+                    >
+                        <v-card-text class="ma-4 pa-4">
+                            {{item.msg}}
+                        </v-card-text>
+                    </v-card>
+                </v-list>
+            </v-container>
+        </v-content>
+        <v-footer height="auto" color="primary lighten-1" fixed app class="ma-8 pa-2">
+            <v-layout
+                    justify-center
+                    row
+                    wrap
+            >
+                <v-flex row>
+                    <v-text-field
+                            solo
+                            hide-details
+                    ></v-text-field>
+                </v-flex>
+                <v-btn>发送</v-btn>
+                <v-dialog
+                        v-model="dialog"
+                        width="600"
+                >
+                    <v-btn
+                            slot="activator"
+                    >检定</v-btn>
+                    <v-card>
+                        <v-card-title
+                                class="headline"
+                                primary-title
+                        >
+                            请选择要检定的对象
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container grid-list-md>
+                                <v-layout wrap>
+                                        <span class="text-sm-center" style="margin: auto;">检定</span>
+                                    <v-flex sm4>
+                                        <v-text-field label="属性/技能"></v-text-field>
+                                    </v-flex>
+                                    <v-flex sm2>
+                                        <v-text-field label="点数" width="14"></v-text-field>
+                                    </v-flex>
+                                    <span class="text-sm-center" style="margin: auto;">+</span>
+                                    <v-flex sm3>
+                                        <v-select :items="properties"></v-select>
+                                    </v-flex>
+                                </v-layout>
+                                <v-subheader>
+                                        属性
+                                </v-subheader>
+                                <v-layout row wrap>
+                                    <v-chip
+                                            v-for="(item, index) in properties"
+                                            :key="index"
+                                    >
+                                        {{item.title}}
+                                    </v-chip>
+                                </v-layout>
+                                 <v-subheader>
+                                     技能
+                                </v-subheader>
+                                <v-layout row wrap>
+                                    <v-chip
+                                            v-for="(item, index) in skills"
+                                            :key="index"
+                                    >
+                                        {{item.title}}
+                                    </v-chip>
+                                </v-layout>
+                                <v-subheader>
+                                    骰子
+                                </v-subheader>
+                                <v-layout row wrap>
+                                    <v-chip
+                                            v-for="(item, index) in dices"
+                                            :key="index"
+                                    >
+                                        {{item}}
+                                    </v-chip>
+                                </v-layout>
 
-            <md-app-drawer md-permanent="full">
-                <md-toolbar class="md-transparent" md-elevation="0">
-                    Navigation
-                </md-toolbar>
-
-                <md-list>
-                    <md-list-item>
-                        <md-icon>move_to_inbox</md-icon>
-                        <span class="md-list-item-text">Inbox</span>
-                    </md-list-item>
-
-                    <md-list-item>
-                        <md-icon>send</md-icon>
-                        <span class="md-list-item-text">Sent Mail</span>
-                    </md-list-item>
-
-                    <md-list-item>
-                        <md-icon>delete</md-icon>
-                        <span class="md-list-item-text">Trash</span>
-                    </md-list-item>
-
-                    <md-list-item>
-                        <md-icon>error</md-icon>
-                        <span class="md-list-item-text">Spam</span>
-                    </md-list-item>
-                </md-list>
-            </md-app-drawer>
-
-            <md-app-content>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quibusdam, non molestias et! Earum magnam, similique, quo recusandae placeat dicta asperiores modi sint ea repudiandae maxime? Quae non explicabo, neque.</p>
-            </md-app-content>
-        </md-app>
-    </div>
+                            </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn flat>丢!</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                <v-dialog
+                        v-model="dialog"
+                        width="500"
+                >
+                    <v-btn
+                            slot="activator"
+                    >
+                        掷骰
+                    </v-btn>
+                    <v-card>
+                        <v-card-title>
+                            请选择要投掷的骰子
+                        </v-card-title>
+                        <v-card-text>
+                        <v-container grid-list-md>
+                                <v-layout wrap>
+                                    <v-flex sm5>
+                                        <v-text-field label="点数" width="14"></v-text-field>
+                                    </v-flex>
+                                    <span class="text-sm-center" style="margin: auto;">+</span>
+                                    <v-flex sm5>
+                                        <v-select :items="properties"></v-select>
+                                    </v-flex>
+                                </v-layout>
+                                <v-subheader>
+                                    骰子
+                                </v-subheader>
+                                <v-layout row wrap>
+                                    <v-chip
+                                            v-for="(item, index) in dices"
+                                            :key="index"
+                                    >
+                                        {{item}}
+                                    </v-chip>
+                                </v-layout>
+                            </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn flat>丢!</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-layout>
+        </v-footer>
+    </v-app>
 </template>
-
-<style lang="scss" scoped>
-    .md-app {
-        max-height: 400px;
-        border: 1px solid rgba(#000, .12);
-    }
-
-    // Demo purposes only
-    .md-drawer {
-        width: 230px;
-        max-width: calc(100vw - 125px);
-    }
+<style>
 </style>
 
 <script>
     export default {
-        name: 'Waterfall'
+        data: () => ({
+            KP: [
+                {name: "KP1"}
+            ],
+            PC: [
+                {name: "PC1"},
+                {name: "PC2"},
+                {name: "PC3"},
+                {name: "PC4"},
+                {name: "PC5"},
+                {name: "PC6"},
+                {name: "PC7"},
+            ],
+            properties: [
+                {title: "力量", name : "STR"},
+                {title: "体质", name : "CON"},
+                {title: "体型", name : "SIZ"},
+                {title: "敏捷", name : "DEX"},
+                {title: "外貌", name : "APP"},
+                {title: "智力", name : "INT"},
+                {title: "灵感", name : "IDEA"},
+                {title: "意志", name : "POW"},
+                {title: "教育", name : "EDU"},
+                {title: "移动力", name : "MOV"},
+                {title: "幸运", name : "LUCKY"},
+            ],
+            skills: [
+                {title: "人类学", name: "Human"},
+                {title: "人类学", name: "Human"},
+                {title: "人类学", name: "Human"},
+                {title: "人类学", name: "Human"},
+                {title: "人类学", name: "Human"},
+                {title: "人类学", name: "Human"},
+            ],
+            dices:[
+                "d4",
+                "d6",
+                "d8",
+                "d10",
+                "d100",
+                "d12",
+                "d20"
+            ],
+            messages: [
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
+            ]
+
+        }),
+        props: {
+            source: String
+        }
     }
 </script>
