@@ -29,7 +29,7 @@
                         <v-stepper-content step="1">
                             <v-data-table
                                     :headers="header_random"
-                                    :items="property_value"
+                                    :items="_property_value"
                                     hide-actions
                             >
                                 <template slot="items" slot-scope="props">
@@ -39,6 +39,11 @@
                                     <td>{{props.item.value / 5}}</td>
                                 </template>
                             </v-data-table>
+                            <v-btn
+                                    v-on:click="handlePropertyRandomize"
+                            >
+                                不高兴, 重新丢!
+                            </v-btn>
                             <v-btn
                                     @click="e1 = 2"
                             >
@@ -265,6 +270,13 @@
 <script>
     var occupation = require("../data/occupation")
     export default {
+        computed: {
+            _property_value: {
+                get() {
+                    return this.property_value
+                }
+            }
+        },
         data() {
             return {
                 occupations: occupation.data,
@@ -341,19 +353,28 @@
                         value: 10,
                     },
                     {
-                        name: "力量",
+                        name: "体质",
                         value: 10,
                     }, {
-                        name: "力量",
+                        name: "体型",
                         value: 10,
                     }, {
-                        name: "力量",
+                        name: "敏捷",
                         value: 10,
                     }, {
-                        name: "力量",
+                        name: "外貌",
                         value: 10,
                     }, {
-                        name: "力量",
+                        name: "智力",
+                        value: 10,
+                    },{
+                        name: "意志",
+                        value: 10,
+                    },{
+                        name: "教育",
+                        value: 10,
+                    },{
+                        name: "幸运",
                         value: 10,
                     },
                 ],
@@ -396,6 +417,28 @@
                     },
                 ],
                 e1: 0
+            }
+        },
+        methods: {
+            getRandomInteger(max) {
+                return Math.floor(Math.random() * Math.floor(max-1)) + 1;
+            },
+            handlePropertyRandomize(event) {
+                if (event) event.preventDefault()
+                alert("DO")
+                for (let i = 0; i < this.property_value.length; i++) {
+                    if (this.property_value[i].name in ["力量", "体质", "敏捷", "外貌", "意志", "幸运"]) {
+                        let value = this.getRandomInteger(6) + this.getRandomInteger(6) + this.getRandomInteger(6);
+                        value = value * 5;
+                        this.property_value[i].value = value
+                    }
+
+                    if (this.property_value[i].name in ["体型", "智力", "教育"]) {
+                        let value = this.getRandomInteger(6) + this.getRandomInteger(6) + 6;
+                        value = value * 5;
+                        this.property_value[i].value = value
+                    }
+                }
             }
         },
         name: "PlayerCard"
