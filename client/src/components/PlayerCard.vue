@@ -180,6 +180,23 @@
                             </v-btn>
                         </v-stepper-content>
                         <v-stepper-content step="5">
+                            <v-layout
+                                    wrap
+                                    row
+                            >
+                                <v-text-field
+                                        label="姓名"
+                                >
+                                </v-text-field>
+                                <v-text-field
+                                        label="性别"
+                                >
+                                </v-text-field>
+                                <v-text-field
+                                        label="出生地"
+                                >
+                                </v-text-field>
+                            </v-layout>
                             <v-text-field
                                     v-on:focus="current_bg_title='个人描述'; current_bg_description=backgrounds.description"
                                     label="个人描述"
@@ -257,6 +274,9 @@
                                     @click="e1=7"
                             >继续</v-btn>
                         </v-stepper-content>
+                        <v-stepper-content step="7">
+                            <PlayerCardSummary></PlayerCardSummary>
+                        </v-stepper-content>
                     </v-stepper-items>
                 </v-stepper>
             </v-card-text>
@@ -265,11 +285,13 @@
 </template>
 
 <script>
+    import PlayerCardSummary from "../components/PlayerCardSummary.vue"
     var occupation = require("../data/occupation")
     var skills = require("../data/skills")
     var background = require("../data/background")
     var credit = require("../data/credit").data
     export default {
+        components: {PlayerCardSummary},
         created: function () {
             this.handlePropertyRandomize()
         },
@@ -555,7 +577,7 @@
                     },
                 ],
                 skill_value: skills.data,
-                e1: 0
+                e1: 7
             }
         },
         methods: {
