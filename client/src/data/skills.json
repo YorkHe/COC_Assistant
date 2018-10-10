@@ -1,0 +1,258 @@
+{
+  "data": [
+    {
+      "name": "会计",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "人类学",
+      "initial": 1,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "估价",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "考古学",
+      "initial": 1,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "魅惑",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "攀爬",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "计算机使用",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "信用评级",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "克苏鲁神话",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "乔装",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "闪避",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "汽车驾驶",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "电子维修",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "电子学",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "话术",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "急救",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "历史",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "恐吓",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "跳跃",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "母语",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "法律",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "图书馆使用",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "聆听",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "锁匠",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "机械维修",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "医学",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "博物学",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "领导力",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "神秘学",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "操作重型机械",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "说服",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "精神分析",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "心理学",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "骑术",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },{
+      "name": "妙手",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "侦查",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "潜行",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "游泳",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "投掷",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    },
+    {
+      "name": "追踪",
+      "initial": 5,
+      "growth": 0,
+      "job": 0,
+      "interest": 0
+    }
+  ]
+}
