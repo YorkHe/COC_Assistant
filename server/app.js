@@ -22,7 +22,6 @@ io.on('connection', (socket)=>{
     const roomID = splitted[splitted.length - 1];
     console.log("ROOM"+roomID)
     if (!playerList[roomID]) playerList[roomID] = {}
-    if (!KP[roomID]) KP[roomID] = {}
 
     socket.on("register", (msg)=>{
         let token = msg.token;
