@@ -344,7 +344,9 @@
             playerList(data) {
                 this.KP = data.KP
                 this.PC = data.PC
-                document.cookie = data.token
+            },
+            setToken(data){
+                document.cookie = data
             }
         },
         updated(){

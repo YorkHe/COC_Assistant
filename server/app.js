@@ -34,13 +34,15 @@ io.on('connection', (socket)=>{
                 if (!PC[roomID]) PC[roomID] = []
                 PC[roomID].push(msg.name)
                 io.to(roomID).emit("message", {msg: `调查员 ${msg.name} 加入了房间`})
+                socket.emit("setToken", token)
             } else {
                 if (!KP[roomID]) KP[roomID] = []
                 KP[roomID].push(msg.name)
                 io.to(roomID).emit("message", {msg: `KP ${msg.name} 加入了房间`})
+                socket.emit("setToken", token)
             }
         }
-        io.to(roomID).emit("playerList", {PC:PC[roomID], KP:KP[roomID], token})
+        io.to(roomID).emit("playerList", {PC:PC[roomID], KP:KP[roomID]})
         console.log(msg)
         console.log(PC)
         console.log(KP)
