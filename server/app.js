@@ -26,7 +26,8 @@ io.on('connection', (socket)=>{
     socket.on("register", (msg)=>{
         let token = msg.token;
         socket.join(roomID);
-        if (!msg.token || !(msg.token in playerList)) {
+
+        if (!msg.token || !(msg.token in playerList[roomID])) {
             token = Math.random().toString(36).substring(7);
             playerList[roomID][token] = msg.name
             if (msg.type == "PC") {
