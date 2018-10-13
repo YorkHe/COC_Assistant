@@ -82,9 +82,9 @@
                 <v-dialog
                         width="600"
                 >
-                    <v-btn
-                            slot="activator"
-                    >检定</v-btn>
+                    <!--<v-btn-->
+                            <!--slot="activator"-->
+                    <!--&gt;检定</v-btn>-->
                     <v-card>
                         <v-card-title
                                 class="headline"
