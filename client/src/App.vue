@@ -18,7 +18,7 @@
                         <v-icon>person</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>{{item.name}}</v-list-tile-title>
+                        <v-list-tile-title>{{item}}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-divider>
@@ -34,7 +34,7 @@
                         <v-icon>child_care</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>{{item.name}}</v-list-tile-title>
+                        <v-list-tile-title>{{item}}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
@@ -46,8 +46,9 @@
                 <PlayerCard></PlayerCard>
             </v-toolbar-items>
         </v-toolbar>
+
         <v-content>
-            <v-container fluid fill-height>
+            <v-container fluid fill-height id="msg_container">
                 <v-list
                         style="background: rgba(0,0,0,0);"
                 >
@@ -70,11 +71,14 @@
             >
                 <v-flex row>
                     <v-text-field
+                            v-model="msg"
                             solo
                             hide-details
                     ></v-text-field>
                 </v-flex>
-                <v-btn>发送</v-btn>
+                <v-btn
+                        @click="handleSendButtonOnClick"
+                >发送</v-btn>
                 <v-dialog
                         width="600"
                 >
@@ -149,6 +153,7 @@
                     </v-card>
                 </v-dialog>
                 <v-dialog
+                        v-model="dialog2"
                         width="500"
                 >
                     <v-btn
@@ -164,11 +169,11 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex sm5>
-                                        <v-text-field disabled label="点数" width="14" v-model="dice_result2"></v-text-field>
+                                        <v-text-field disabled label="点数" width="14" v-model="_dice_result2"></v-text-field>
                                     </v-flex>
                                     <span class="text-sm-center" style="margin: auto;">+</span>
                                     <v-flex sm5>
-                                        <v-text-field label="偏移" width="14"></v-text-field>
+                                        <v-text-field label="偏移" width="14" v-model="bias2"></v-text-field>
                                     </v-flex>
                                 </v-layout>
                                 <v-subheader>
@@ -187,12 +192,53 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn flat>丢!</v-btn>
+                            <v-btn
+                                    @click="handleRollDice($event, _dice_result2, dice_count2, bias2, true)"
+                                    flat
+                            >
+                                暗投
+                            </v-btn>
+                            <v-btn
+                                    @click="handleRollDice($event, _dice_result2, dice_count2, bias2, false)"
+                                    flat>丢!</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
             </v-layout>
         </v-footer>
+        <v-dialog v-model="register_dialog" persistent max-width="300">
+            <v-card>
+                <v-card-title>
+                    调查员, 欢迎来到这个房间, 你的名字是?
+                </v-card-title>
+                <v-card-text>
+                    <v-layout
+                            wrap
+                            row
+                    >
+
+                        <v-text-field
+                                v-model="user_name"
+                                label="名字"
+                        >
+                        </v-text-field>
+                        <v-switch
+                                :label="`我是KP: ${isKP.toString()}`"
+                                v-model="isKP"
+                        >
+
+                        </v-switch>
+
+                    </v-layout>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spaer></v-spaer>
+                    <v-btn
+                            @click="handleRegisterButtonClicked"
+                    >确认</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-app>
 </template>
 <style>
@@ -206,25 +252,26 @@
             PlayerCard
         },
         data: () => ({
+            isConnected: false,
+            isKP: false,
+            register_dialog: true,
+            socketMessage: '',
             bias_value:0,
             prop_name:"",
             dice_count1:[],
             dice_count2:[],
             dice_result1:"",
             dice_result2:"",
+            bias1: "0",
+            bias2: "0",
+            msg: "",
+            dialog1: false,
+            dialog2: false,
             slider1: 50,
             slider2: 50,
             KP: [
-                {name: "KP1"}
             ],
             PC: [
-                {name: "PC1"},
-                {name: "PC2"},
-                {name: "PC3"},
-                {name: "PC4"},
-                {name: "PC5"},
-                {name: "PC6"},
-                {name: "PC7"},
             ],
             properties: [
                 {title: "力量", name : "STR"},
@@ -257,16 +304,7 @@
                 "d20"
             ],
             messages: [
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
-                {msg:"玩家 {player_name} 过了一个 {property_name} {dice} 检定({number}), 结果是{dice_result}, {exam_result}!", timestamp:1234},
             ]
-
         }),
         computed: {
             _dice_result1: {
@@ -276,12 +314,51 @@
                 get: function () {
                     return this.dice_count1.map(item=> item.value + item.name).concat()
                 }
-            }
+            },
+             _dice_result2: {
+                set: function (value) {
+                    this.dice_result2=value
+                },
+                get: function () {
+                    return this.dice_count2.map(item=> item.value + item.name).concat()
+                }
+            },
+
         },
         props: {
             source: String
         },
+        sockets: {
+            connect() {
+                this.isConnected = true;
+            },
+            disconnect() {
+                this.isConnected = false;
+            },
+            customEmit(val){
+                this.messages.push(val)
+            },
+            message(data) {
+                this.messages.push(data)
+            },
+            playerList(data) {
+                this.KP = data.KP
+                this.PC = data.PC
+                document.cookie = data.token
+            }
+        },
+        updated(){
+            window.scrollTo(0,document.body.scrollHeight - 100);
+        },
         methods: {
+            handleSendButtonOnClick(event) {
+                if(event) event.preventDefault()
+                this.$socket.emit("message", {
+                    msg: this.msg,
+                    token: document.cookie
+                })
+                this.msg = ""
+            },
             handlePropertySelect(type, event) {
                 if (event) event.preventDefault()
                 this.prop_name = event.target.innerText
@@ -304,6 +381,23 @@
                 if (event) event.preventDefault()
                 this.prop_name = ""
                 this.dice_count1 = []
+            },
+            handleRollDice(event, dice_result, dice_count, bias, dark){
+                if (event) event.preventDefault()
+                this.$socket.emit("dice", {
+                    token: document.cookie,
+                    dices:dice_count,
+                    dice_name: dice_result,
+                    dark: dark,
+                    bias: bias||0
+                })
+                dice_count.splice(0, dice_count.length)
+                bias = 0
+                this.dialog2 = false;
+            },
+            handleRegisterButtonClicked() {
+                this.$socket.emit("register", {name: this.user_name, type: this.isKP?"KP":"PC", token:document.cookie})
+                this.register_dialog=false
             }
         }
     }

@@ -577,7 +577,7 @@
                     },
                 ],
                 skill_value: skills.data,
-                e1: 7
+                e1: 1
             }
         },
         methods: {
