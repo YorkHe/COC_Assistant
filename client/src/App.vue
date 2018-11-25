@@ -295,6 +295,7 @@
                 {title: "人类学", name: "Human"},
             ],
             dices:[
+                "d3",
                 "d4",
                 "d6",
                 "d8",
